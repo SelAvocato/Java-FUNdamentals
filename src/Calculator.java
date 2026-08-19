@@ -7,33 +7,39 @@ public class Calculator {
     public void calculate() {
         System.out.println("---------------Calculator----------------\n" +
                 "Press 'Enter' without a number to exit");
-        System.out.print("Enter number: ");
-        String firstValStr = scanner.nextLine();
-        if (firstValStr.trim().isEmpty()) {
-            exit();
+        try {
+            System.out.print("Enter number: ");
+            String firstValStr = scanner.nextLine();
+            if (firstValStr.trim().isEmpty()) {
+                exit();
+                return;
+            }
+            double firstNum = Double.parseDouble(firstValStr);
+            total += firstNum;
+        } catch (Exception e){
+            System.out.println("Invalid input");
+            scanner.close();
             return;
         }
-        double firstNum = Double.parseDouble(firstValStr);
-        total += firstNum;
 
         while (true) {
-            System.out.print("1. Addition  2. Subtraction  3. Multiplication  4. Division  5. Exit\nOperation: ");
-            int operation = scanner.nextInt();
-            scanner.nextLine();
-            if (operation == 5) {
-                exit();
-                break;
-            }
-
-            System.out.print("Enter number: ");
-            String loopValStr = scanner.nextLine();
-            if (loopValStr.trim().isEmpty()) {
-                exit();
-                break;
-            }
-
-            double loopNum = Double.parseDouble(loopValStr);
             try {
+                System.out.print("1. Addition  2. Subtraction  3. Multiplication  4. Division  5. Exit\nOperation: ");
+                int operation = scanner.nextInt();
+                scanner.nextLine();
+                if (operation == 5) {
+                    exit();
+                    break;
+                }
+
+                System.out.print("Enter number: ");
+                String loopValStr = scanner.nextLine();
+                if (loopValStr.trim().isEmpty()) {
+                    exit();
+                    break;
+                }
+
+                double loopNum = Double.parseDouble(loopValStr);
                 switch (operation) {
                     case 1 -> add(loopNum);
                     case 2 -> subtract(loopNum);
@@ -45,6 +51,7 @@ public class Calculator {
             } catch (Exception e) {
                 System.out.println("Invalid input");
                 scanner.close();
+                break;
             }
             System.out.println("Total: " + total);
         }
