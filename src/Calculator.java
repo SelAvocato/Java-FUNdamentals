@@ -40,6 +40,8 @@ public class Calculator {
                     case 3 -> multiply(loopNum);
                     case 4 -> divide(loopNum);
                 }
+            } catch (IllegalArgumentException e) {
+                System.out.println("You can't divide by zero");
             } catch (Exception e) {
                 System.out.println("Invalid input");
                 scanner.close();
@@ -61,6 +63,9 @@ public class Calculator {
     }
 
     public void divide(double num) {
+        if (num == 0) {
+            throw new IllegalArgumentException();
+        }
         total /= num;
     }
 
