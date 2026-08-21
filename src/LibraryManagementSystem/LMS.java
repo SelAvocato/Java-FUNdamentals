@@ -9,14 +9,26 @@ public class LMS {
     Object[] books = {prideAndPrejudiceBook, mobyDickBook};
     int page = 1;
 
+    enum Page {
+        HOME, DISPLAY, BORROW_BOOK, RETURN_BOOK, NULL
+    }
+
+    final int DISPLAY_BOOKS_OPERATION = 1;
+    final int BORROW_BOOK_OPERATION = 2;
+    final int RETURN_BOOK_OPERATION = 3;
+
+    Page currentPage = Page.HOME;
+    int operation = 0;
+
+
     public void home() {
-        while (page == 1) {
+        while (currentPage == Page.HOME) {
             try {
                 System.out.print("Operations: 1. Display books | 2. Borrow books | 3. Return books | 4. Exit\nEnter a number: ");
-                int operation = scan.nextInt();
+                operation = scan.nextInt();
 
                 switch (operation) {
-                    case 1 -> displayBooks(books);
+                    case 1 -> displayBooks();
                     case 2 -> borrowBook();
                     case 3 -> returnBook();
                     case 4 -> exit();
@@ -30,16 +42,19 @@ public class LMS {
 
     public void displayBooks(Object[] books) {
         page = 2;
+    public void displayBooks() {
         System.out.println("| Id |       Name       | Year Published | Genre |    Author    | Quantity | ");
         for (Object book : books) {
             System.out.println(book);
         }
-        while (page == 2) {
+        if (operation != DISPLAY_BOOKS_OPERATION) return;
+        currentPage = Page.DISPLAY;
+        while (currentPage == Page.DISPLAY) {
             try {
                 System.out.print("Operations: 1. Return | 2. Exit\nEnter a number: ");
-                int operation = scan.nextInt();
+                operation = scan.nextInt();
                 switch (operation) {
-                    case 1 -> page = 1;
+                    case 1 -> currentPage = Page.HOME;
                     case 2 -> exit();
                     default -> handleInvalidInput();
                 }
@@ -59,7 +74,7 @@ public class LMS {
 
     public void exit() {
         System.out.println("Goodbye");
-        page = 0;
+        currentPage = Page.NULL;
         scan.close();
     }
 
