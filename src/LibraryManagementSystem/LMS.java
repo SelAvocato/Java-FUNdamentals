@@ -17,18 +17,25 @@ public class LMS {
     final int RETURN_BOOK_OPERATION = 3;
 
     Page currentPage = Page.HOME;
-    int operation = 0;
 
     List<Book> books = getBooks();
 
-    public void home() {
-        while (currentPage == Page.HOME) {
-            getOperations();
+    public void start() {
+        while (currentPage != Page.NULL) {
+            switch (currentPage) {
+                case HOME -> getOperations();
+                case DISPLAY -> displayBooks();
+                case BORROW_BOOK -> borrowBook();
+                case RETURN_BOOK -> returnBook();
+                default -> currentPage = Page.NULL;
+            }
         }
+        System.out.println("Goodbye");
+        scan.close();
     }
 
     public static List<Book> getBooks() {
-        Book prideAndPrejudiceBook = new Book("Pride and Prejudice",    1813, "Romance", "Jane Austen", 15);
+        Book prideAndPrejudiceBook = new Book("Pride and Prejudice", 1813, "Romance", "Jane Austen", 15);
         Book mobyDickBook = new Book("Moby-Dick", 1851, "Adventure", "Herman Melville", 8);
         return new ArrayList<>(List.of(prideAndPrejudiceBook, mobyDickBook));
     }
@@ -36,13 +43,13 @@ public class LMS {
     public void getOperations() {
         try {
             System.out.print("Operations: 1. Display books | 2. Borrow books | 3. Return books | 4. Exit\nEnter a number: ");
-            operation = scan.nextInt();
+            int operation = scan.nextInt();
 
             switch (operation) {
-                case 1 -> displayBooks();
-                case 2 -> borrowBook();
-                case 3 -> returnBook();
-                case 4 -> exit();
+                case 1 -> currentPage = Page.DISPLAY;
+                case 2 -> currentPage = Page.BORROW_BOOK;
+                case 3 -> currentPage = Page.RETURN_BOOK;
+                case 4 -> currentPage = Page.NULL;
                 default -> handleInvalidInput();
             }
         } catch (Exception e) {
@@ -55,12 +62,13 @@ public class LMS {
         for (Book book : books) {
             System.out.println(book);
         }
-        if (operation != DISPLAY_BOOKS_OPERATION) return;
-        getOperations();
+        currentPage = Page.HOME;
     }
 
     public void borrowBook() {
-        displayBooks();
+        for (Book book : books) {
+            System.out.println("ID: " + book.getId() + " | Name: " + book.name + " | Year Published: " + " | Genre: " + book.genre + " | Author: " + book.author + " | Quantity: " + book.getQuantity());
+        }
         currentPage = Page.BORROW_BOOK;
         while (currentPage == Page.BORROW_BOOK) {
             try {
@@ -68,7 +76,6 @@ public class LMS {
                 int bookId = scan.nextInt();
                 if (bookId == RETURN_OPERATION) {
                     currentPage = Page.HOME;
-                    home();
                     return;
                 }
                 boolean foundBook = false;
@@ -87,17 +94,10 @@ public class LMS {
                 handleInvalidInput();
             }
         }
-        getOperations();
     }
 
-    public static void returnBook() {
+    public void returnBook() {
 
-    }
-
-    public void exit() {
-        System.out.println("Goodbye");
-        currentPage = Page.NULL;
-        scan.close();
     }
 
     public void handleInvalidInput() {

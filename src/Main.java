@@ -6,5 +6,5 @@ void main() {
 //    calculator.calculate();
 
     LMS lms = new LMS();
-    lms.home();
+    lms.start();
 }
