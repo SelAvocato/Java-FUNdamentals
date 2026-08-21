@@ -43,24 +43,24 @@ public class Book {
         return quantity;
     }
 
-    public void setYearPublished(int newYearPublished) {
-        yearPublished = newYearPublished;
+    public void setYearPublished(int yearPublished) {
+        this.yearPublished = yearPublished;
     }
 
-    public void setGenre(String newGenre) {
-        genre = newGenre;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
-    public void setAuthor(String newAuthor) {
-        author = newAuthor;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public void setQuantity(int newQuantity) {
-        quantity = newQuantity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public void setName(String newName) {
-        name = newName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void borrowBook() {
