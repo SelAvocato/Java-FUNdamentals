@@ -67,7 +67,7 @@ public class LMS {
 
     public void borrowBook() {
         for (Book book : books) {
-            System.out.println("ID: " + book.getId() + " | Name: " + book.name + " | Year Published: " + " | Genre: " + book.genre + " | Author: " + book.author + " | Quantity: " + book.getQuantity());
+            System.out.println("ID: " + book.getId() + " | Name: " + book.getName() + " | Year Published: " + book.getYearPublished() + " | Genre: " + book.getGenre() + " | Author: " + book.getAuthor() + " | Quantity: " + book.getQuantity());
         }
         currentPage = Page.BORROW_BOOK;
         while (currentPage == Page.BORROW_BOOK) {
@@ -83,7 +83,7 @@ public class LMS {
                     if (book.getId() != bookId) continue;
                     book.borrowBook();
                     foundBook = true;
-                    System.out.println("You borrowed " + book.name);
+                    System.out.println("You borrowed " + book.getName());
                 }
                 if (!foundBook) {
                     System.out.println("Book ID not found");
