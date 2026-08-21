@@ -19,6 +19,10 @@ public class Book {
         this.quantity = quantity;
     }
 
+    public int getId() {
+        return bookId;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -33,7 +37,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return  " | " + bookId +
+        return " | " + bookId +
                 " | " + name +
                 " |    " + yearPublished +
                 "    | " + genre +
