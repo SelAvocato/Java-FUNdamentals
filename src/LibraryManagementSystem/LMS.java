@@ -100,7 +100,7 @@ public class LMS {
 
     }
 
-    public void handleInvalidInput() {
+    void handleInvalidInput() {
         System.out.println("Invalid input");
         scan.nextLine();
     }

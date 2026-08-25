@@ -1,28 +1,26 @@
 package LibraryManagementSystem;
 
-import java.util.List;
-
-public class User {
+public abstract class User {
     private static int lastAssignedId = 0;
     private final int userId;
     private String username;
     private String firstName;
     private String lastName;
     private String password;
-    private List<Integer> borrowedBooksId;
 
     static final int NAME_FIELD = 1;
     static final int CREDENTIALS_FIELD = 2;
 
-    User(String username, String firstName, String lastName, String password, int borrowedBookId) throws Exception {
+    User(String username, String firstName, String lastName, String password) throws Exception {
         lastAssignedId++;
         this.userId = lastAssignedId;
         setUsername(username);
         setFirstName(firstName);
         setLastName(lastName);
         setPassword(password);
-        setBorrowedBooksId(borrowedBookId);
     }
+
+    public abstract String getRole();
 
     public void setUsername(String username) throws Exception {
         if (isInvalidString(username, NAME_FIELD)) throw new Exception("Invalid username");
@@ -44,44 +42,20 @@ public class User {
         this.password = password.trim();
     }
 
-    public void setBorrowedBooksId(int borrowedBookId) {
-        this.borrowedBooksId.add(borrowedBookId);
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public List<Integer> getBorrowedBooksId() {
-        return borrowedBooksId;
-    }
+    public int getUserId() { return userId; }
+    public String getUsername() { return username; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public String getFullName() { return firstName + " " + lastName; }
+    public String getPassword() { return password; }
 
     boolean isInvalidString(String str, int field) {
+        if (str == null) return true;
         String trimmedStr = str.trim();
-        if (trimmedStr.isEmpty()) return true;
-        if (trimmedStr.length() > 255) return true;
+        if (trimmedStr.isEmpty() || trimmedStr.length() > 255) return true;
+
         if (field == NAME_FIELD) {
-            for (char c : str.toCharArray()) {
+            for (char c : trimmedStr.toCharArray()) {
                 if (Character.isDigit(c)) return true;
             }
             return false;
