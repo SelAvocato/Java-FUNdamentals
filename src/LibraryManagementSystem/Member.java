@@ -19,6 +19,20 @@ public class Member extends User {
         return borrowedBooksId;
     }
 
+    public void borrowBook(int bookId) throws Exception {
+        if (borrowedBooksId.contains(bookId)) {
+            throw new Exception("Book is already borrowed by this member");
+        }
+        borrowedBooksId.add(bookId);
+    }
+
+    public void returnBook(int bookId) throws Exception {
+        if (!borrowedBooksId.contains(bookId)) {
+            throw new Exception("This book was not borrowed by this member");
+        }
+        borrowedBooksId.remove(Integer.valueOf(bookId));
+    }
+
     @Override
     public String getRole() {
         return "MEMBER";
